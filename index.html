@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ApeRectum - The Bottom of Crypto</title>
+    <meta name="description" content="ApeRectum ($AR) is the ape of the rectum of the cryptospace. Born in a bear market, living at the bottom.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ------------------- */
+        /* --- CSS Reset & Globals --- */
+        /* ------------------- */
+        :root {
+            --primary-orange: #FF6F00; /* A vibrant, solid orange */
+            --primary-black: #0A0A0A; /* A deep, near-black */
+            --off-white: #F5F5F5;
+            --grey: #888888;
+
+            --font-heading: 'Archivo Black', sans-serif;
+            --font-body: 'Poppins', sans-serif;
+
+            --container-width: 1100px;
+            --spacing-unit: 1rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            background-color: var(--primary-black);
+            color: var(--off-white);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ------------------- */
+        /* --- Typography & Base Elements --- */
+        /* ------------------- */
+        h1, h2, h3 {
+            font-family: var(--font-heading);
+            color: var(--off-white);
+            line-height: 1.2;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 10vw, 5rem);
+        }
+
+        h2 {
+            font-size: clamp(2rem, 8vw, 3.5rem);
+            margin-bottom: calc(var(--spacing-unit) * 2);
+            text-align: center;
+        }
+        
+        h2 span {
+            color: var(--primary-orange);
+        }
+
+        p {
+            font-size: 1rem;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        a {
+            color: var(--primary-orange);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* ------------------- */
+        /* --- Layout & Sections --- */
+        /* ------------------- */
+        .container {
+            width: 90%;
+            max-width: var(--container-width);
+            margin: 0 auto;
+        }
+
+        section {
+            padding: calc(var(--spacing-unit) * 5) 0;
+            overflow: hidden;
+        }
+
+        .section-content {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .section-content.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ------------------- */
+        /* --- Header & Navigation --- */
+        /* ------------------- */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: var(--spacing-unit) 0;
+            background-color: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 111, 0, 0.2);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 90%;
+            max-width: var(--container-width);
+            margin: 0 auto;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: calc(var(--spacing-unit) * 0.75);
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo-text {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            color: var(--off-white);
+        }
+
+        .nav-links {
+            display: none; /* Hidden on mobile */
+        }
+
+        .nav-links a {
+            color: var(--off-white);
+            margin-left: calc(var(--spacing-unit) * 2);
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-orange);
+        }
+
+        /* Mobile Menu */
+        .menu-toggle {
+            display: block;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .hamburger {
+            width: 25px;
+            height: 2px;
+            background-color: var(--off-white);
+            display: block;
+            position: relative;
+            transition: background-color 0.3s ease;
+        }
+
+        .hamburger::before,
+        .hamburger::after {
+            content: '';
+            width: 25px;
+            height: 2px;
+            background-color: var(--off-white);
+            display: block;
+            position: absolute;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger::before {
+            top: -8px;
+        }
+
+        .hamburger::after {
+            bottom: -8px;
+        }
+
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            left: 100%;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--primary-black);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: left 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+            z-index: 999;
+        }
+        
+        .mobile-nav.active {
+            left: 0;
+        }
+        
+        .menu-toggle.active .hamburger {
+            background-color: transparent;
+        }
+        
+        .menu-toggle.active .hamburger::before {
+            top: 0;
+            transform: rotate(45deg);
+        }
+        
+        .menu-toggle.active .hamburger::after {
+            bottom: 0;
+            transform: rotate(-45deg);
+        }
+
+        .mobile-nav a {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            color: var(--off-white);
+            margin: var(--spacing-unit) 0;
+            padding: var(--spacing-unit);
+        }
+
+
+        /* ------------------- */
+        /* --- Hero Section --- */
+        /* ------------------- */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 80px; /* Offset for fixed header */
+        }
+
+        .hero-content {
+            position: relative;
+        }
+
+        .hero-logo {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto calc(var(--spacing-unit) * 2);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        #hero h1 {
+            margin-bottom: var(--spacing-unit);
+        }
+        
+        #hero h1 span {
+            color: var(--primary-orange);
+        }
+
+        .hero-subheading {
+            font-size: 1.2rem;
+            color: var(--grey);
+            margin-bottom: calc(var(--spacing-unit) * 2.5);
+        }
+
+        .cta-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-unit);
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: calc(var(--spacing-unit) * 0.9) calc(var(--spacing-unit) * 2.5);
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            text-transform: uppercase;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            border: 2px solid var(--primary-orange);
+            cursor: pointer;
+            min-width: 220px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-orange);
+            color: var(--primary-black);
+        }
+
+        .btn-primary:hover {
+            background-color: transparent;
+            color: var(--primary-orange);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary-orange);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--primary-orange);
+            color: var(--primary-black);
+        }
+        
+        .contract-address {
+            margin-top: calc(var(--spacing-unit) * 2);
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: var(--grey);
+            word-break: break-all;
+            padding: 0 var(--spacing-unit);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .copy-tooltip {
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--off-white);
+            color: var(--primary-black);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            white-space: nowrap;
+        }
+
+        .copy-tooltip.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+
+        /* ------------------- */
+        /* --- About Section --- */
+        /* ------------------- */
+        #about p {
+            text-align: center;
+            color: var(--grey);
+            line-height: 1.8;
+        }
+
+        /* ------------------- */
+        /* --- Tokenomics Section --- */
+        /* ------------------- */
+        #tokenomics {
+            background-color: #101010;
+        }
+        
+        .tokenomics-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-unit);
+            margin-top: calc(var(--spacing-unit) * 3);
+        }
+
+        .token-card {
+            background-color: var(--primary-black);
+            padding: calc(var(--spacing-unit) * 2);
+            border: 1px solid rgba(255, 111, 0, 0.2);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .token-card h3 {
+            color: var(--primary-orange);
+            font-size: 1.2rem;
+            margin-bottom: calc(var(--spacing-unit) * 0.5);
+        }
+
+        .token-card p {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--off-white);
+        }
+        
+        .token-card .small-text {
+            font-size: 1rem;
+            color: var(--grey);
+            font-weight: 400;
+        }
+
+        /* ------------------- */
+        /* --- How to Buy Section --- */
+        /* ------------------- */
+        .buy-steps {
+            max-width: 700px;
+            margin: calc(var(--spacing-unit) * 3) auto 0;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-unit) * 1.5;
+            margin-bottom: calc(var(--spacing-unit) * 2.5);
+        }
+
+        .step-number {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            color: var(--primary-orange);
+            line-height: 1;
+        }
+
+        .step-content h3 {
+            font-family: var(--font-body);
+            font-weight: 600;
+            text-transform: none;
+            font-size: 1.2rem;
+            margin-bottom: calc(var(--spacing-unit) * 0.25);
+        }
+
+        .step-content p {
+            color: var(--grey);
+            max-width: 100%;
+            margin: 0;
+        }
+
+        /* ------------------- */
+        /* --- Roadmap Section --- */
+        /* ------------------- */
+        #roadmap {
+            background-color: #101010;
+        }
+
+        .roadmap-timeline {
+            position: relative;
+            max-width: 800px;
+            margin: calc(var(--spacing-unit) * 3) auto 0;
+        }
+
+        .roadmap-timeline::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            background-color: rgba(255, 111, 0, 0.2);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1px;
+        }
+
+        .roadmap-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+        }
+
+        .roadmap-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -10px;
+            background-color: var(--primary-black);
+            border: 3px solid var(--primary-orange);
+            top: 20px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .roadmap-item.left {
+            left: 0;
+            text-align: right;
+        }
+
+        .roadmap-item.right {
+            left: 50%;
+        }
+
+        .roadmap-item.right::after {
+            left: -10px;
+        }
+
+        .roadmap-content {
+            padding: 20px 30px;
+            background-color: var(--primary-black);
+            position: relative;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 111, 0, 0.2);
+        }
+        
+        .roadmap-content h3 {
+            font-family: var(--font-body);
+            text-transform: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .roadmap-content p {
+            font-size: 0.9rem;
+            color: var(--grey);
+            max-width: 100%;
+            margin: 0;
+        }
+        
+        .roadmap-item.completed::after {
+            background-color: var(--primary-orange);
+        }
+
+        /* ------------------- */
+        /* --- Footer --- */
+        /* ------------------- */
+        .footer {
+            padding: calc(var(--spacing-unit) * 3) 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 111, 0, 0.2);
+        }
+
+        .footer-logo {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto var(--spacing-unit);
+            opacity: 0.5;
+        }
+
+        .footer p {
+            color: var(--grey);
+            font-size: 0.9rem;
+        }
+        
+        .footer .disclaimer {
+            font-size: 0.8rem;
+            margin-top: var(--spacing-unit);
+            max-width: 500px;
+        }
+
+        /* ------------------- */
+        /* --- Media Queries --- */
+        /* ------------------- */
+        @media (max-width: 768px) {
+            .roadmap-timeline::after {
+                left: 10px;
+            }
+
+            .roadmap-item {
+                width: 100%;
+                padding-left: 50px;
+                padding-right: 10px;
+            }
+
+            .roadmap-item.left, .roadmap-item.right {
+                left: 0;
+                text-align: left;
+            }
+
+            .roadmap-item::after {
+                left: 1px;
+            }
+        }
+        
+        @media (min-width: 576px) {
+            .cta-buttons {
+                flex-direction: row;
+                justify-content: center;
+            }
+            .tokenomics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 992px) {
+            .menu-toggle {
+                display: none;
+            }
+            .nav-links {
+                display: block;
+            }
+            .tokenomics-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <a href="#hero" class="logo-container">
+                <img src="./logo.png" alt="ApeRectum Logo" class="logo-img">
+                <span class="logo-text">ApeRectum</span>
+            </a>
+            <nav class="nav-links">
+                <a href="#about">About</a>
+                <a href="#tokenomics">Tokenomics</a>
+                <a href="#how-to-buy">Buy</a>
+                <a href="#roadmap">Roadmap</a>
+            </nav>
+            <div class="menu-toggle">
+                <span class="hamburger"></span>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav">
+        <a href="#about">About</a>
+        <a href="#tokenomics">Tokenomics</a>
+        <a href="#how-to-buy">Buy</a>
+        <a href="#roadmap">Roadmap</a>
+    </nav>
+
+    <main>
+
+        <!-- Hero Section -->
+        <section id="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <img src="./logo.png" alt="ApeRectum Bear Logo" class="hero-logo">
+                    <h1>WELCOME TO THE <span>BOTTOM</span>.</h1>
+                    <p class="hero-subheading">This is ApeRectum. The final destination for every crypto journey.</p>
+                    <div class="cta-buttons">
+                        <a href="#how-to-buy" class="btn btn-primary">Get To The Bottom</a>
+                        <button class="btn btn-secondary" id="copy-contract-btn">Copy Contract</button>
+                    </div>
+                    <div class="contract-address" id="contract-address">
+                        CHiNsA2B6ZbmKnEmHPCbbX9aXJyoJzAtcLpHEDd6Qyq3
+                        <span class="copy-tooltip" id="copy-tooltip">Copied!</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about">
+            <div class="container section-content">
+                <h2>THE GUTS OF THE <span>MATTER</span></h2>
+                <p>
+                    Crypto is full of promises. Rockets, moons, and mythical creatures leading to untold riches. We found that exhausting.
+                    ApeRectum is an honest reflection. It combines the blind faith of an "ape" with the grim reality of a "bear," and lands exactly where you'd expect: the rectum.
+                    This isn't an investment. It's a statement. A darkly humorous acceptance of the chaos. We started at the bottom so there are no false peaks to fall from.
+                </p>
+            </div>
+        </section>
+
+        <!-- Tokenomics Section -->
+        <section id="tokenomics">
+            <div class="container section-content">
+                <h2><span>TOKEN</span>OMICS</h2>
+                <div class="tokenomics-grid">
+                    <div class="token-card">
+                        <h3>Token Name</h3>
+                        <p>ApeRectum</p>
+                    </div>
+                    <div class="token-card">
+                        <h3>Ticker</h3>
+                        <p>$AR</p>
+                    </div>
+                    <div class="token-card">
+                        <h3>Taxes</h3>
+                        <p>0% / 0%</p>
+                        <p class="small-text">Your losses are your own.</p>
+                    </div>
+                    <div class="token-card">
+                        <h3>Liquidity</h3>
+                        <p>Burnt</p>
+                        <p class="small-text">Gone. Like your hopes.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How to Buy Section -->
+        <section id="how-to-buy">
+            <div class="container section-content">
+                <h2>HOW TO <span>SCRAPE THE BARREL</span></h2>
+                <div class="buy-steps">
+                    <div class="step">
+                        <div class="step-number">01</div>
+                        <div class="step-content">
+                            <h3>GET A WALLET</h3>
+                            <p>Download Phantom or your preferred Solana wallet from the app store or get the browser extension.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">02</div>
+                        <div class="step-content">
+                            <h3>GET SOME SOL</h3>
+                            <p>You'll need SOL in your wallet to swap. Buy it on an exchange and send it to your wallet address.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">03</div>
+                        <div class="step-content">
+                            <h3>GO TO A DEX</h3>
+                            <p>Visit a decentralized exchange like Raydium or Jupiter. Connect your wallet.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">04</div>
+                        <div class="step-content">
+                            <h3>SWAP FOR $AR</h3>
+                            <p>Paste the $AR contract address, select SOL as your payment, and confirm the swap. Welcome to the end of the line.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Roadmap Section -->
+        <section id="roadmap">
+            <div class="container section-content">
+                <h2>A ROADMAP TO <span>NOWHERE</span></h2>
+                <div class="roadmap-timeline">
+                    <div class="roadmap-item left completed">
+                        <div class="roadmap-content">
+                            <h3>Phase 1: Birth</h3>
+                            <p>The token is conceived and deployed into the unforgiving crypto abyss. It exists. That's a win.</p>
+                        </div>
+                    </div>
+                    <div class="roadmap-item right">
+                        <div class="roadmap-content">
+                            <h3>Phase 2: Awareness</h3>
+                            <p>You are here. Realizing that a token can be this self-aware and pointless. The void stares back.</p>
+                        </div>
+                    </div>
+                    <div class="roadmap-item left">
+                        <div class="roadmap-content">
+                            <h3>Phase 3: Contemplation</h3>
+                            <p>We all reflect on our financial decisions. Was this one of them? Probably. Does it matter? Probably not.</p>
+                        </div>
+                    </div>
+                    <div class="roadmap-item right">
+                        <div class="roadmap-content">
+                            <h3>Phase 4: The Inevitable</h3>
+                            <p>The cycle continues. ApeRectum remains a monument to the bottom, a relic of market absurdity.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <img src="./logo.png" alt="ApeRectum Logo" class="footer-logo">
+            <p>&copy; 2024 ApeRectum. All rights reserved, for what they're worth.</p>
+            <p class="disclaimer">
+                This is a meme coin with no intrinsic value or expectation of financial return. It is a purely satirical and entertainment-based project.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // --- Mobile Menu Toggle ---
+            const menuToggle = document.querySelector('.menu-toggle');
+            const mobileNav = document.querySelector('.mobile-nav');
+            const navLinks = document.querySelectorAll('.mobile-nav a');
+
+            menuToggle.addEventListener('click', function() {
+                this.classList.toggle('active');
+                mobileNav.classList.toggle('active');
+            });
+            
+            // Close menu when a link is clicked
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    menuToggle.classList.remove('active');
+                    mobileNav.classList.remove('active');
+                });
+            });
+
+            // --- Contract Address Copy ---
+            const copyBtn = document.getElementById('copy-contract-btn');
+            const contractAddressEl = document.getElementById('contract-address');
+            const contractAddress = contractAddressEl.innerText.trim();
+            const tooltip = document.getElementById('copy-tooltip');
+
+            const copyAction = () => {
+                navigator.clipboard.writeText(contractAddress).then(() => {
+                    tooltip.classList.add('visible');
+                    setTimeout(() => {
+                        tooltip.classList.remove('visible');
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                });
+            };
+
+            copyBtn.addEventListener('click', copyAction);
+            contractAddressEl.addEventListener('click', copyAction);
+
+
+            // --- Scroll Animations ---
+            const sections = document.querySelectorAll('.section-content');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+        });
+    </script>
+
+</body>
+</html>
